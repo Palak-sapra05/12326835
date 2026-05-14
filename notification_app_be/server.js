@@ -1,26 +1,23 @@
 const express = require("express");
+const cors = require("cors");
+
+const notificationRoutes = require("./routes/notificationRoutes");
 const Log = require("../logging_middleware/logger");
 
 const app = express();
 
-app.get("/", async (req, res) => {
-  await Log(
-    "backend",
-    "info",
-    "route",
-    "Home route accessed"
-  );
+app.use(cors());
+app.use(express.json());
 
-  res.send("Backend running");
-});
+app.use("/notifications", notificationRoutes);
 
 app.listen(3000, async () => {
-  console.log("Server started");
+  console.log("Server running on port 3000");
 
   await Log(
     "backend",
     "info",
     "service",
-    "Backend server started"
+    "Backend server started successfully"
   );
 });
